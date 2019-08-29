@@ -5,11 +5,8 @@ const express = require('express');
 const morgan = require('morgan');
 const routes = require('./routes');
 const app = express();
-//const models = require('./models');
-//const Sequelize = require('sequelize');
-//const sequelize = models.sequelize;
-//const db = require('./models');
-//const db = require('./config/config');
+const Sequelize = require('sequelize');
+const sequelize = require("./models").sequelize;
 
 
 //Set request body JSON parsing
@@ -61,28 +58,13 @@ const server = app.listen(app.get('port'), () => {
   console.log(`Express server is listening on port ${server.address().port}`);
 });
 //Test the connection to the database
-// sequelize
-//   .authenticate()
-//   .then(() => {
-//     console.log("Connection has been established successfully");
-//     return db.sequlize.sync();
-//   })
-//   .then(() => {
-//     const server = app.listen(app.get('port'), () => {
-//       console.log(
-//         'Express server is listening on port ${server.address().port}'
-//       );
-//     });
-//   })
-//   .catch(err => {
-//     console.error('Unable to connect to the database:",err')
-//   });
-// test db connection
-// db.sequelize
-//   .authenticate()
-//   .then(function (err) {
-//     console.log('db Connection has been established successfully.');
-//   })
-//   .catch(function (err) {
-//     console.log('Unable to connect to the database:', err);
-//   });
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log("Connection has been established successfully");
+    return sequlize.sync();
+  })
+
+  .catch(err => {
+    console.error('Unable to connect to the database:",err')
+  });
