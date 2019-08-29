@@ -2,6 +2,11 @@
 
 const express = require('express');
 const router = express.Router();
+const {
+    Sequelize,
+    sequelize,
+    models
+} = require('./models');
 const auth = require('basic-auth');
 const bcryptjs = require('bcryptjs');
 const {
@@ -115,6 +120,26 @@ router.post('/users', (req, res) => {
     //Set the status to 201 Created and end the response
     res.status(201).end();
 })
+
+//Get All Courses by ID GET/api/courses/:id
+// router.get('/courses/:id', asyncHandler(async (req, res) => {
+//     CountQueuingStrategy.findOne({
+//             attributes: ['id', 'userId', 'title', 'description', 'estimatedTime', 'materialsNeeded'],
+//             where: {
+//                 id: req.params.id
+//             }
+//         })
+//         .then((course) => {
+//             if (course) {
+//                 res.json({
+//                     course
+//                 });
+//             } else {
+//                 res.status(400).end();
+//             }
+//         })
+// }))
+
 
 
 
