@@ -6,12 +6,13 @@ const morgan = require('morgan');
 const routes = require('./routes');
 const app = express();
 const Sequelize = require('sequelize');
-const sequelize = require("./models").sequelize;
+const sequelize = require('./models').sequelize;
+const bodyParser = require('body-parser')
 
 
 //Set request body JSON parsing
 app.use(express.json());
-app.use(express.urlencoded({
+app.use(bodyParser.urlencoded({
   extended: false
 }));
 
