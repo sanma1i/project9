@@ -16,7 +16,7 @@ const router = express.Router();
 
 // const courses = [];
 
-router.get('/courses', (req, res) => {
+router.get('/', (req, res) => {
     res.json({
         message: 'Welcome to the courses route',
     });
