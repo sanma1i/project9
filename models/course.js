@@ -1,15 +1,15 @@
 'use strict';
 
-module.exports = (sequelize, DataType) => {
+module.exports = (sequelize, DataTypes) => {
 
     const Course = sequelize.define('Course', {
         id: {
-            type: DataType.INTEGER,
+            type: DataTypes.INTEGER,
             primaryKey: true,
             autoIcrement: true
         },
         title: {
-            type: DataType.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false,
             validate: {
                 notNull: {
@@ -18,7 +18,7 @@ module.exports = (sequelize, DataType) => {
             },
         },
         description: {
-            type: DataType.INTEGER,
+            type: DataTypes.TEXT,
             allowNull: false,
             validate: {
                 notEmpty: {
@@ -27,12 +27,12 @@ module.exports = (sequelize, DataType) => {
             },
         },
         estimatedTime: {
-            type: DataType.STRING,
+            type: DataTypes.STRING,
             allowNull: true,
-            DataType
+
         },
         materialsNeeded: {
-            type: DataType.STRING,
+            type: DataTypes.STRING,
             allowNull: true,
         }
     }, {});

@@ -1,14 +1,14 @@
 'use strict';
 
-module.exports = (sequelize, DataType) => {
+module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define('User', {
         id: {
-            type: DataType.INTEGER,
+            type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
         },
         firstName: {
-            type: DataType.STRING,
+            type: DataTypes.STRING,
             allowNull: false,
             validate: {
                 notNull: {
@@ -20,7 +20,7 @@ module.exports = (sequelize, DataType) => {
             },
         },
         lastName: {
-            type: DataType.STRING,
+            type: DataTypes.STRING,
             allowNull: false,
             validate: {
                 notNull: {
@@ -32,7 +32,7 @@ module.exports = (sequelize, DataType) => {
             },
         },
         emailAddress: {
-            type: DataType.STRING,
+            type: DataTypes.STRING,
             allowNull: false,
             validate: {
                 isEmail: {
@@ -47,7 +47,7 @@ module.exports = (sequelize, DataType) => {
             },
         },
         password: {
-            type: DataType.STRING,
+            type: DataTypes.STRING,
             allowNull: false,
             validate: {
                 notNull: {

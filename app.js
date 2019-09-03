@@ -3,31 +3,39 @@
 // load modules
 const express = require('express');
 const morgan = require('morgan');
-const routes = require('./routes');
+const courses = require('./routes/courses');
+const users = require('./routes/users');
+const main = require('./routes/main');
 const app = express();
-const Sequelize = require('sequelize');
+//const Sequelize = require('sequelize');
 const sequelize = require('./models').sequelize;
-const bodyParser = require('body-parser')
+//const bodyParser = require('body-parser')
 
 
 //Set request body JSON parsing
 app.use(express.json());
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
+// app.use(bodyParser.urlencoded({
+//   extended: false
+// }));
 
 // setup morgan which gives us http request logging
 app.use(morgan('dev'));
 
 // setup a friendly greeting for the root route
-app.get('/', (req, res) => {
-  res.json({
-    message: 'Welcome to the REST API project!',
-  });
-});
+// app.get('/', (req, res) => {
+//   res.json({
+//     message: 'Welcome to the REST API project!',
+//   });
+// });
 
-//Add routes
-app.use('/api', routes);
+//Setup API routes
+app.use('/api', users);
+app.use('/api', courses);
+app.use('/api', main);
+
+//Redirect to API route
+app.get('/', (req, res) => res.redirect('/api'));
+
 
 // send 404 if no other route matched
 app.use((req, res) => {
@@ -63,7 +71,7 @@ sequelize
   .authenticate()
   .then(() => {
     console.log("Connection has been established successfully");
-    return sequlize.sync();
+    return sequelize.sync();
   })
 
   .catch(err => {

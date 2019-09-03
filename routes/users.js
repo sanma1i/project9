@@ -6,21 +6,36 @@
      Sequelize,
      sequelize,
      models
- } = require('./models');
+ } = require('../models');
  const auth = require('basic-auth');
  const bcryptjs = require('bcryptjs');
  const {
      check,
      validationResult
  } = require('express-validator');
+
  //This array is used to keep track of users resords as they are created
  const users = [];
 
  //Route that returns a list of users
- router.get('/users', (req, res) => {
-     res.json(users);
- })
+ //  router.get('/users', (req, res) => {
+ //      res.json(users);
+ //  })
 
+ router.get('/users', (req, res) => {
+     res.json({
+         //      Users.findAll()
+         //          .then(users => {
+         //              res.render('index', {
+         //                  users: users
+         //              });
+         //          })
+         //          .catch(err => console.log(err))
+         //  });
+         message: 'Welcome to the users route',
+
+     });
+ })
  //Route that creates new user
  router.post('/users', [
      check('firstName')
