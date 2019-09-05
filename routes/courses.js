@@ -2,6 +2,8 @@
 
 const express = require('express');
 const router = express.Router();
+const Course = require('../models').Course;
+
 // const {
 //     Sequelize,
 //     sequelize,
@@ -14,7 +16,14 @@ const router = express.Router();
 //     validationResult
 // } = require('express-validator');
 
-// const courses = [];
+
+router.get('/courses', (req, res) => {
+    Course.findAll()
+        .then(courses => {
+            res.json(courses)
+        })
+})
+
 
 router.get('/', (req, res) => {
     res.json({

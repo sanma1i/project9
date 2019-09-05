@@ -29,12 +29,12 @@ app.get('/', (req, res) => {
 });
 
 //Setup API routes
-app.use('/api/users', users);
-app.use('/api/courses', courses);
+app.use('/api', users);
+app.use('/api', courses);
 app.use('/api', main);
 
 //Redirect to API route
-app.get('/', (req, res) => res.redirect('/api'));
+// app.get('/', (req, res) => res.redirect('/api'));
 
 
 // send 404 if no other route matched

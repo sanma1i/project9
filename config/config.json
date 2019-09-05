@@ -12,7 +12,7 @@
 
     "dialect": "sqlite",
 
-    "storage": "test.db"
+    "storage": "fsjstd-restapi.db"
 
   },
 
@@ -20,7 +20,7 @@
 
     "dialect": "sqlite",
 
-    "storage": "production.db"
+    "storage": "fsjstd-restapi.db"
 
   }
 

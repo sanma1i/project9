@@ -1,7 +1,7 @@
 {
   "name": "techdegree-fullstackjs-rest-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "We've supplied the following files for you to use:",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -22,5 +22,13 @@
     "sequelize": "^5.16.0",
     "sequelize-cli": "^5.5.0",
     "sqlite3": "^4.0.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanma1i/project9.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sanma1i/project9/issues"
+  },
+  "homepage": "https://github.com/sanma1i/project9#readme"
 }
