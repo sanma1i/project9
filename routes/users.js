@@ -3,10 +3,6 @@
  const express = require('express');
  const router = express.Router();
  const User = require('../models').User;
- //  const {
- //      check,
- //      validationResult
- //  } = require('express-validator/check');
  const auth = require('basic-auth');
  const bcryptjs = require('bcryptjs');
 
@@ -61,20 +57,26 @@
  }
 
  //Creates a user
- router.post('/users', (req, res) => {
-     //if there is a password
-     if (req.body.password) {
-         //hash the password
-         req.body.password = bcryptjs.hashSync(req.body.password);
-         //user validation for User model
-         User.create(req.body);
-         res.location('/');
-         res.status(201).end();
-     } else {
-         //Response with status 401
-         res.status(401).end();
+ router.post('/users', async (req, res, next) => {
+     try {
+         const user = req.body
+         //if there is a password
+         if (user.password) {
+             //hash the password
+             user.password = bcryptjs.hashSync(user.password);
+             //user validation for User model
+             await User.create(user);
+             res.location('/');
+             res.status(201).end();
+         } else {
+             //Response with status 401
+             res.status(401).end();
+         }
+     } catch (err) {
+         console.log('Error 500 - Internal Server Error')
+         next(err);
      }
- })
+ });
 
  //Returns the current authenticated user
  router.get('/users', authenticateUser, async (req, res) => {

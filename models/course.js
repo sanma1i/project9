@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notNull: {
+                notEmpty: {
                     msg: 'Title is required'
                 }
             },

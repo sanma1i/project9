@@ -11,9 +11,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notNull: {
-                    msg: 'First name is required'
-                },
+
                 notEmpty: {
                     msg: 'First name is required'
                 }
@@ -23,10 +21,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notNull: {
-                    msg: 'Last name is required'
-                },
 
+                notEmpty: {
+                    msg: 'Last name is required'
+                }
             },
         },
         emailAddress: {
@@ -36,20 +34,20 @@ module.exports = (sequelize, DataTypes) => {
                 isEmail: {
                     msg: 'Please enter a valid email.'
                 },
-                notNull: {
-                    msg: 'Email address is required'
-                },
 
+                notEmpty: {
+                    msg: 'Email address is required'
+                }
             },
         },
         password: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notNull: {
-                    msg: 'Password is required'
-                },
 
+                notEmpty: {
+                    msg: 'Password is required'
+                }
             },
         }
     }, {});
