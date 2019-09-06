@@ -114,7 +114,7 @@ router.put('/courses/:id', authenticateUser, async (req, res, next) => {
 
 
     try {
-        let course = await Course.findByPk(req.params.id);
+        let course = Course.findByPk(req.params.id);
         course.userId === req.body.userId
         course.title = req.body.title;
         course.description = req.body.description;
