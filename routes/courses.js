@@ -108,6 +108,42 @@ router.post('/courses', authenticateUser, async (req, res, next) => {
         next(err);
     }
 });
-//Updates course
+//Updates a course
+router.put('/courses/:id', authenticateUser, async (req, res, next) => {
+    //let course = await Course.findByPk(req.params.id);
+
+
+    try {
+        let course = await Course.findByPk(req.params.id);
+        course.userId === req.body.userId
+        course.title = req.body.title;
+        course.description = req.body.description;
+        course.estimatedTime = req.body.estimatedTime;
+        course.materialNeeded = req.body.materialNeeded;
+        course = await course.update(req.body);
+        res.status(204).end();
+    } catch (err) {
+        // const err = new Error(`Ooops! You don't have permission`);
+        // err.status = 403;
+        console.log('Error 401 - Unauthorized Request');
+        next(err);
+    }
+
+})
+//Deletes courses
+router.delete("/:id/delete", async (req, res, next) => {
+    const course = await Course.findByPk(req.params.id);
+    if (course.userId === req.body.userId) {
+        await course.destroy();
+        res.status(204).end();
+    } else {
+        const err = new Error(`Ooops! You don't have permission`);
+        err.status = 403;
+        next(err);
+    }
+
+})
+
+
 
 module.exports = router;
