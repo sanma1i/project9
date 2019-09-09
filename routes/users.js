@@ -61,7 +61,7 @@
      try {
          const user = req.body
          //if there is a password
-         if (user.password) {
+         if (user.password && user.firstName && user.lastName && user.emailAddress) {
              //hash the password
              user.password = bcryptjs.hashSync(user.password);
              //user validation for User model
@@ -69,12 +69,17 @@
              res.location('/');
              res.status(201).end();
          } else {
-             //Response with status 401
-             res.status(401).end();
+             //Response with status 400
+             res.status(400).end();
          }
      } catch (err) {
-         console.log('Error 500 - Internal Server Error')
-         next(err);
+         if (err.name === "SequelizeValidationError") {
+             console.log('Error 400 - Validation Error')
+             res.status(400).end();
+         } else {
+             console.log('Error 500 - Internal Server Error')
+             next(err);
+         }
      }
  });
 
