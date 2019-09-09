@@ -98,10 +98,21 @@ router.get('/courses/:id', (req, res, next) => { // returns the course (includin
 
 router.post('/courses', authenticateUser, async (req, res, next) => {
     try {
-        const createCourse = await Course.create(req.body);
-        res.location(`/api/courses/${createCourse.id}`);
-        res.status(201).end();
+        if (req.body.title && req.body.description) {
+            //Validation for creating new course
+            const createCourse = await Course.create(req.body);
+            //Sets location header to URI for the course
+            res.location(`/api/courses/${createCourse.id}`);
+            //If course is successfully created, return 201 status  
+            res.status(201).end();
+        } else {
+            const err = new Error('Missing information')
+            // If title or description are left empty, return 400 status
+            err.status = 400;
+            next(err);
+        }
     } catch (err) {
+        //If course cannot be created, return 401 status
         console.log('Error 401 - Unauthorized Request');
         next(err);
     }
@@ -113,8 +124,8 @@ router.put('/courses/:id', authenticateUser, async (req, res, next) => {
 
     try {
         let course = Course.findByPk(req.params.id);
-        course.userId === req.body.userId
-        course.title = req.body.title;
+        if (course.userId === req.body.userId)
+            course.title = req.body.title;
         course.description = req.body.description;
         course.estimatedTime = req.body.estimatedTime;
         course.materialsNeeded = req.body.materialsNeeded;
@@ -129,19 +140,17 @@ router.put('/courses/:id', authenticateUser, async (req, res, next) => {
 
 })
 //Deletes courses
-router.delete("/:id/delete", async (req, res, next) => {
+router.delete("/courses/:id", authenticateUser, async (req, res, next) => {
     const course = await Course.findByPk(req.params.id);
     if (course.userId === req.body.userId) {
         await course.destroy();
         res.status(204).end();
     } else {
-        const err = new Error(`Ooops! You don't have permission`);
+        const err = new Error('You don\'t have permission to delete this course.')
         err.status = 403;
         next(err);
     }
-
-})
-
+});
 
 
 module.exports = router;
