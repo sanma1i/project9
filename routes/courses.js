@@ -124,17 +124,29 @@ router.put('/courses/:id', authenticateUser, async (req, res, next) => {
 
     try {
         let course = Course.findByPk(req.params.id);
-        if (course.userId === req.body.userId)
-            course.title = req.body.title;
-        course.description = req.body.description;
-        course.estimatedTime = req.body.estimatedTime;
-        course.materialsNeeded = req.body.materialsNeeded;
-        course = await course.update(req.body);
-        res.status(204).end();
+        if (course.userId === req.body.userId) {
+            if (req.body.title && req.body.description) {
+                course.title = req.body.title;
+                course.description = req.body.description;
+                course.estimatedTime = req.body.estimatedTime;
+                course.materialsNeeded = req.body.materialsNeeded;
+                course = await course.update(req.body);
+                res.status(204).end();
+            } else {
+                const err = new Error('Missing information')
+                // If title or description are left empty, return 400 status
+                err.status = 400;
+                next(err);
+            }
+        } else {
+            const err = new Error(`Forbiden  You don't have permission`)
+            err.status = 403;
+            next(err);
+        }
     } catch (err) {
         // const err = new Error(`Ooops! You don't have permission`);
         // err.status = 403;
-        console.log('Error 403 - Unauthorized Request');
+        console.log('Error 500 - Internal Server Error');
         next(err);
     }
 
@@ -146,7 +158,7 @@ router.delete("/courses/:id", authenticateUser, async (req, res, next) => {
         await course.destroy();
         res.status(204).end();
     } else {
-        const err = new Error('You don\'t have permission to delete this course.')
+        const err = new Error(`You don't have permission to delete this course.`)
         err.status = 403;
         next(err);
     }

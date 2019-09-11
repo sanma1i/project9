@@ -73,9 +73,11 @@
              res.status(400).end();
          }
      } catch (err) {
-         if (err.name === "SequelizeValidationError") {
+         if (err.message === "This e-mail already exists.") {
              console.log('Error 400 - Validation Error')
-             res.status(400).end();
+             res.status(400).json({
+                 message: 'This e-mail already exists.'
+             });
          } else {
              console.log('Error 500 - Internal Server Error')
              next(err);
